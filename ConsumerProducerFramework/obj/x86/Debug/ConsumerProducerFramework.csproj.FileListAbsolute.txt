@@ -1,0 +1,10 @@
+C:\14.Projects\ConsumerProducerFramework\ConsumerProducerFramework\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\14.Projects\ConsumerProducerFramework\ConsumerProducerFramework\bin\Debug\ConsumerProducerFramework.exe
+C:\14.Projects\ConsumerProducerFramework\ConsumerProducerFramework\bin\Debug\ConsumerProducerFramework.pdb
+C:\14.Projects\ConsumerProducerFramework\ConsumerProducerFramework\obj\x86\Debug\ConsumerProducerFramework.exe
+C:\14.Projects\ConsumerProducerFramework\ConsumerProducerFramework\obj\x86\Debug\ConsumerProducerFramework.pdb
+C:\GitRoot\ConsumerProducerFramework\ConsumerProducerFramework\obj\x86\Debug\ConsumerProducerFramework.exe
+C:\GitRoot\ConsumerProducerFramework\ConsumerProducerFramework\obj\x86\Debug\ConsumerProducerFramework.pdb
+C:\GitRoot\ConsumerProducerFramework\ConsumerProducerFramework\bin\Debug\ConsumerProducerFramework.exe
+C:\GitRoot\ConsumerProducerFramework\ConsumerProducerFramework\bin\Debug\ConsumerProducerFramework.pdb
+C:\GitRoot\ConsumerProducerFramework\ConsumerProducerFramework\obj\x86\Debug\ResolveAssemblyReference.cache
