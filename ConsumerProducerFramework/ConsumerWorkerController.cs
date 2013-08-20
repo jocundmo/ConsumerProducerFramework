@@ -8,20 +8,34 @@ namespace ConsumerProducerFramework
     {
         TaskQueue<T> queue;
         ConsumerWorker<T>[] workers;
+        int workerCount = 0;
+
+        public delegate ConsumerWorker<T> CreateWorkerEvent(ConsumerWorkerController<T> workerController, string workerName);
+        public event CreateWorkerEvent CreateWorker;
+        //public event Action CreateWorker;
 
         public TaskQueue<T> Queue { get { return queue; } set { queue = value; } }
         public ConsumerWorker<T>[] Workers { get { return workers; } }
 
-        public ConsumerWorkerController(int workerCount)
+        public void Initialize()
         {
+            if (workerCount <= 0)
+                throw new Exception("worker count couldn't less than 0...");
+            if (CreateWorker == null)
+                throw new Exception("method to create worker not attached...");
             queue = new TaskQueue<T>();
             workers = new ConsumerWorker<T>[workerCount];
 
-            //for (int i = 0; i < workerCount; i++)
-            //{
-            //    workers[i] = ConsumerWorker<T>.CreateConsumerWorker(i.ToString(), queue);
-            //    //workers[i] = new TestConsumer1<T>(i.ToString(), queue);
-            //}
+            for (int i = 0; i < workerCount; i++)
+            {
+                if (CreateWorker != null)
+                    workers[i] = CreateWorker(this, i.ToString());
+            }
+        }
+
+        public ConsumerWorkerController(int workerCount)
+        {
+            this.workerCount = workerCount;
         }
 
         public void PushProduct(T prod)
