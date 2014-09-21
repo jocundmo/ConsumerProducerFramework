@@ -49,11 +49,13 @@
     <Compile Include="ConsumerProducerFramework\Context.cs" />
     <Compile Include="ConsumerProducerFramework\CountdownWaitHandle.cs" />
     <Compile Include="ConsumerProducerFramework\IConsumerWorkable.cs" />
+    <Compile Include="ConsumerProducerFramework\ProducerWorker.cs" />
     <Compile Include="IDPELogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ConsumerProducerFramework\TaskQueue.cs" />
     <Compile Include="TestConsumer1.cs" />
+    <Compile Include="TestProducer1.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

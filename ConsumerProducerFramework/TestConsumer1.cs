@@ -17,11 +17,15 @@ namespace ConsumerProducerFramework
         }
 
 
+        protected override void InitializeWorker(Context o)
+        {
+            base.InitializeWorker(o);
+        }
         protected override void PullProduct(Book task)
         {
             //Book b = (Book)task;
-            Console.WriteLine(string.Format("ThreadName is {0}, Name is {1}", Thread.CurrentThread.ManagedThreadId, task.Name));
-            Thread.Sleep(1000);
+            Console.WriteLine(string.Format("Consumed one ... ... ... ThreadName is {0}, Name is {1}", Thread.CurrentThread.ManagedThreadId, task.Name));
+            Thread.Sleep(100);
         }
         //public override void ConsumerStart()
         //{

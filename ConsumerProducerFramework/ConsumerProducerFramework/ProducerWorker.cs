@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Globalization;
 
 namespace ConsumerProducerFramework
 {
-    public class ConsumerWorker<T> where T : class
+    public class ProducerWorker<T> where T : class
     {
         private object _locker = new object();
         public ConsumerWorkerController<T> Controller { get; private set; }
@@ -56,21 +57,21 @@ namespace ConsumerProducerFramework
         }
         public string Message { get; set; }
 
-        public ConsumerWorker(string name, ConsumerWorkerController<T> controller, Context ctx, CultureInfo culture)
+        public ProducerWorker(string name, ConsumerWorkerController<T> controller, Context ctx, CultureInfo culture)
         {
             this.Ctx = ctx;
             this.Controller = controller;
             //this.Name = name;
             //this.CommitLogToDBWhenEnded = true;
 
-            worker = new Thread(ConsumerStart);
+            worker = new Thread(ProducerStart);
             worker.Name = name;
             worker.CurrentCulture = culture;
             worker.Start(Ctx);
 
         }
 
-        public void ConsumerStart(object o)
+        public void ProducerStart(object o)
         {
             try
             {
@@ -78,11 +79,14 @@ namespace ConsumerProducerFramework
                 InitializeWorkerInner(ctx);
                 while (true)
                 {
-                    T task = Queue.Dequeue();
+                    T task = PushProductInner();
+                    Queue.EnqueueTask(task);
+
+                    //T task = Queue.Dequeue();
                     if (task == null)
                     {
 
-                        Console.WriteLine("Worker {0} received a NULL as end signal...", this.Name);
+                        Console.WriteLine("Producer worker {0} Sent a NULL as end signal...", this.Name);
                         this.Message = "Success";
                         this.RunningStatus = RunningStatus.Successful;
                         this.Ctx.InsertRunningResult(RunningStatus, this.Message);
@@ -90,8 +94,6 @@ namespace ConsumerProducerFramework
                         EndWorkerInner();
                         return;
                     }
-                    else
-                        PullProductInner(task);
                 }
             }
             catch (Exception ex)
@@ -126,7 +128,7 @@ namespace ConsumerProducerFramework
             //this.RunningStatus = DataProcessEngine.RunningStatus.Successful;
             //this.Ctx.InsertRunningResult(RunningStatus, this.Message);
             //this.Ctx.InsertRunningResult(this.IsSuccessful, this.Message);
-            Console.WriteLine("***********************  Consumer Worker Ended ***********************");
+            Console.WriteLine("***********************  Producer Worker Ended ***********************");
             //if (this.CommitLogToDBWhenEnded)
             //{
             //    try
@@ -171,19 +173,25 @@ namespace ConsumerProducerFramework
 
             this.RunningStatus = RunningStatus.Initialized;
             Console.WriteLine("Initialized done...ThreadId is {0}, name is {1}", Thread.CurrentThread.ManagedThreadId, Thread.CurrentThread.Name);
-            Controller.InitializedConsumersCountDown.Signal();
+            Controller.InitializedProducersCountDown.Signal();
             PreExecuteWorker(o);
             //Thread.Sleep(1000 * 15);
         }
 
 
 
-        private void PullProductInner(T task)
+        private T PushProductInner()
         {
             this.RunningStatus = RunningStatus.Started;
-            PullProduct(task);
+            return PushProduct();
         }
-        protected virtual void PullProduct(T task)
+        protected void EndProduce()
+        {
+            this.Controller.EndedProducerCountDown.Signal();
+        }
+
+
+        protected virtual T PushProduct()
         {
             throw new NotImplementedException();
         }
