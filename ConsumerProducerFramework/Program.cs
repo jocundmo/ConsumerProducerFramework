@@ -13,7 +13,9 @@ namespace ConsumerProducerFramework
             Stopwatch sw = new Stopwatch();
             sw.Start();
 
-            using (ConsumerWorkerController<Book> ctrl = new ConsumerWorkerController<Book>(10))
+            Context ctx = new Context();
+            //using（ConsumerWorkerController<Book> conumsers = new ConsumerWorkerController<Book>(
+            using (ConsumerWorkerController<Book> ctrl = new ConsumerWorkerController<Book>(10, ctx))
             {
                 //ctrl.InitializeWorkers<Book>();
                 ctrl.CreateWorker += new ConsumerWorkerController<Book>.CreateWorkerEvent(ctrl_CreateWorker);
@@ -27,7 +29,7 @@ namespace ConsumerProducerFramework
                 for (int i = 0; i < 10; i++)
                 {
                     Book b = new Book(i);
-                    //Thread.Sleep(250);
+                    Thread.Sleep(250);
                     ctrl.PushProduct(b);
                     //b.Consume();
                 }
@@ -49,9 +51,9 @@ namespace ConsumerProducerFramework
             Console.Read();
         }
 
-        static ConsumerWorker<Book> ctrl_CreateWorker(ConsumerWorkerController<Book> workerController, string workerName)
+        static ConsumerWorker<Book> ctrl_CreateWorker(ConsumerWorkerController<Book> workerController, string workerName, Context ctx)
         {
-            return new TestConsumer1(workerName, workerController);
+            return new TestConsumer1(workerName, workerController, ctx, System.Globalization.CultureInfo.CurrentCulture);
         }
 
         

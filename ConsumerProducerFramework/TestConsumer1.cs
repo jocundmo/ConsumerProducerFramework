@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using System.Globalization;
 
 namespace ConsumerProducerFramework
 {
@@ -9,8 +10,8 @@ namespace ConsumerProducerFramework
     {
         //public string Name { get; private set; }
 
-        public TestConsumer1(string name, ConsumerWorkerController<Book> ctrl)
-            : base(name, ctrl.Queue)
+        public TestConsumer1(string name, ConsumerWorkerController<Book> ctrl, Context ctx, CultureInfo culture)
+            : base(name, ctrl, ctx, culture)
         {
             //this.Name = name;
         }

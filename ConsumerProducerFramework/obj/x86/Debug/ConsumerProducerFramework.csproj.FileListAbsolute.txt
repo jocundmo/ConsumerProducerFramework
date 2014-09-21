@@ -8,3 +8,8 @@ C:\GitRoot\ConsumerProducerFramework\ConsumerProducerFramework\obj\x86\Debug\Con
 C:\GitRoot\ConsumerProducerFramework\ConsumerProducerFramework\bin\Debug\ConsumerProducerFramework.exe
 C:\GitRoot\ConsumerProducerFramework\ConsumerProducerFramework\bin\Debug\ConsumerProducerFramework.pdb
 C:\GitRoot\ConsumerProducerFramework\ConsumerProducerFramework\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Jimmy-Mo\Documents\GitHub\ConsumerProducerFramework\ConsumerProducerFramework\obj\x86\Debug\ConsumerProducerFramework.exe
+C:\Users\Jimmy-Mo\Documents\GitHub\ConsumerProducerFramework\ConsumerProducerFramework\obj\x86\Debug\ConsumerProducerFramework.pdb
+C:\Users\Jimmy-Mo\Documents\GitHub\ConsumerProducerFramework\ConsumerProducerFramework\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Jimmy-Mo\Documents\GitHub\ConsumerProducerFramework\ConsumerProducerFramework\bin\Debug\ConsumerProducerFramework.exe
+C:\Users\Jimmy-Mo\Documents\GitHub\ConsumerProducerFramework\ConsumerProducerFramework\bin\Debug\ConsumerProducerFramework.pdb
