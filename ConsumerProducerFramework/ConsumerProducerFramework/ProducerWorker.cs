@@ -70,6 +70,28 @@ namespace ConsumerProducerFramework
             worker.Start(Ctx);
 
         }
+        protected void EndProduce()
+        {
+            this.Controller.EndedProducerCountDown.Signal();
+            T task = default(T);
+            Queue.EnqueueTask(task);
+            if (task == null)
+            {
+
+                Console.WriteLine("Producer worker {0} Sent a NULL as end signal...", this.Name);
+                this.Message = "Success";
+                this.RunningStatus = RunningStatus.Successful;
+                this.Ctx.InsertRunningResult(RunningStatus, this.Message);
+
+                EndWorkerInner();
+                return;
+            }
+        }
+        public void PushProduct(T t)
+        {
+            T task = t;
+            Queue.EnqueueTask(task);
+        }
 
         public void ProducerStart(object o)
         {
@@ -77,35 +99,39 @@ namespace ConsumerProducerFramework
             {
                 Context ctx = (Context)o;
                 InitializeWorkerInner(ctx);
-                while (true)
-                {
-                    T task = PushProductInner();
-                    Queue.EnqueueTask(task);
+                StartProduceProduct(ctx);
+                //    while (true)
+                //    {
+                //        T task = PushProductInner();
+                //        Queue.EnqueueTask(task);
 
-                    //T task = Queue.Dequeue();
-                    if (task == null)
-                    {
+                //        if (task == null)
+                //        {
 
-                        Console.WriteLine("Producer worker {0} Sent a NULL as end signal...", this.Name);
-                        this.Message = "Success";
-                        this.RunningStatus = RunningStatus.Successful;
-                        this.Ctx.InsertRunningResult(RunningStatus, this.Message);
+                //            Console.WriteLine("Producer worker {0} Sent a NULL as end signal...", this.Name);
+                //            this.Message = "Success";
+                //            this.RunningStatus = RunningStatus.Successful;
+                //            this.Ctx.InsertRunningResult(RunningStatus, this.Message);
 
-                        EndWorkerInner();
-                        return;
-                    }
-                }
+                //            EndWorkerInner();
+                //            return;
+                //        }
+                //    }
             }
             catch (Exception ex)
             {
                 this.Message = ex.Message;
                 this.RunningStatus = RunningStatus.Failed;
                 this.Ctx.InsertRunningResult(RunningStatus, this.Message);
-                //this.Ctx.InsertRunningResult(this.IsSuccessful, this.Message);
                 Console.WriteLine("Exception found... {0}", ex.ToString());
                 EndWorkerInner();
                 //throw;
             }
+        }
+
+        protected virtual void StartProduceProduct(Context o)
+        {
+            throw new NotImplementedException();
         }
 
         protected virtual void EndWorker()
@@ -180,21 +206,23 @@ namespace ConsumerProducerFramework
 
 
 
-        private T PushProductInner()
-        {
-            this.RunningStatus = RunningStatus.Started;
-            return PushProduct();
-        }
-        protected void EndProduce()
-        {
-            this.Controller.EndedProducerCountDown.Signal();
-        }
+        //private T PushProductInner()
+        //{
+        //    this.RunningStatus = RunningStatus.Started;
+        //    return PushProduct();
+        //}
+        //protected T EndProduce()
+        //{
+        //    this.Controller.EndedProducerCountDown.Signal();
+        //    var v = default(T);
+        //    return v;
+        //}
 
 
-        protected virtual T PushProduct()
-        {
-            throw new NotImplementedException();
-        }
+        //protected virtual T PushProduct()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         internal void Join()
         {

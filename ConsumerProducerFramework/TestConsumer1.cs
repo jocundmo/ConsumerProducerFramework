@@ -19,6 +19,7 @@ namespace ConsumerProducerFramework
 
         protected override void InitializeWorker(Context o)
         {
+            Thread.Sleep(5000);
             base.InitializeWorker(o);
         }
         protected override void PullProduct(Book task)

@@ -118,7 +118,7 @@ namespace ConsumerProducerFramework
         {
             // Nothing to do.
         }
-        private void EndWorkerInner()
+        protected virtual void EndWorkerInner()
         {
             EndWorker();
             //this.IsSuccessful = true;
@@ -148,7 +148,7 @@ namespace ConsumerProducerFramework
             //}
         }
 
-        private void InitializeWorkerInner(Context o)
+        protected virtual void InitializeWorkerInner(Context o)
         {
             //int logLevel = 0; // default
             //string logBasePath = @"C:\SSISLogFolder\DevCurrent";// default

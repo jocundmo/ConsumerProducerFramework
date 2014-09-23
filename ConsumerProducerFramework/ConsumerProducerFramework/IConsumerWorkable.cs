@@ -8,6 +8,6 @@ namespace ConsumerProducerFramework
     public interface IConsumerWorkable<T> where T : class
     {
         bool Async { get; }
-        ConsumerWorkerController<T> AsyncController { get; }
+        ProducerWorker<T> AsyncProducer { get; }
     }
 }
